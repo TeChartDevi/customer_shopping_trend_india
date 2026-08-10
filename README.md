@@ -96,8 +96,6 @@ The dataset contains customer shopping transactions with information covering:
 * **Rows:** 10,000
 * **Unique customers:** 2,581
 
-> The original dataset should only be committed to this repository if its licensing terms permit redistribution.
-
 ---
 
 # Data Workflow
