@@ -300,7 +300,7 @@ Use deliberately when filters should be removed. Do not add it simply because a 
 
 ---
 
-# Recommended Dashboard Measures
+# KPI Dashboard Measures
 
 | KPI                 | Measure                     |
 | ------------------- | --------------------------- |
