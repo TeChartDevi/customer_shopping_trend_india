@@ -106,7 +106,14 @@ The project follows this workflow:
 Raw Dataset
      │
      ▼
-Data Cleaning
+Data Cleaning (Python, Numpy, Pandas)
+     │
+     ├── Imported libraries & loaded the file
+     ├── Data Inspection
+     ├── Null Value Check & Handling
+     ├── Feature Engineering
+     ├── Clean Dataset Export
+     └── Conclusion
      │
      ▼
 PostgreSQL
@@ -125,6 +132,160 @@ Power BI
      ▼
 Business Insights
 ```
+
+---
+
+# Data Cleaning Steps
+
+### 1. Data Loading
+
+The raw customer shopping dataset was loaded into a Pandas DataFrame for inspection and cleaning.
+
+```text
+import pandas as pd
+import numpy as np
+
+df= pd.read_csv("../raw_data/customer_shopping_behavior.csv")
+```
+
+### 2. Initial Data Inspection
+
+The dataset was inspected to understand its structure, data types, missing values, and duplicates
+
+```text
+df.head()
+df.info()
+df.shape
+df.describe()
+```
+
+### 3. Missing Value Analysis
+
+Missing values were identified across the dataset.
+
+```text
+df.isnull().sum().sort_values(ascending=False)
+```
+
+Specific columns were also investigated to understand relationships between missing values.
+
+```text
+df[
+    df[['Festival/Sale', 'Online Store']]
+    .isnull()
+    .any(axis=1)
+][['Festival/Sale', 'Online Store']]
+```
+
+This helped determine whether missing values represented actual missing information or valid business cases.
+
+### 4. Conditional Missing Value Handling
+
+Missing values were handled based on business logic rather than blindly replacing all null values.
+
+- Online Store
+
+For offline purchases where the online store was missing:
+
+```text
+df.loc[
+    (df['Online/Offline'] == 'Offline') &
+    (df['Online Store'].isna()),
+    'Online Store'
+] = 'In-Store Purchase'
+```
+
+This distinguishes an actual offline purchase from an unknown online store.
+
+- Delivery Speed
+
+For records with zero delivery time and missing delivery speed:
+
+```text
+df.loc[
+    (df['Delivery Time (Days)'] == 0) &
+    (df['Delivery Speed'].isna()),
+    'Delivery Speed'
+] = 'N/A (Offline)'
+```
+
+This reflects the assumption that a zero-day delivery time represents an offline purchase where delivery speed is not applicable.
+
+### 5. Category-Specific Size Columns
+
+The original Size column contains size information for different product categories.
+
+To make the data easier to analyze, separate columns were created for footwear and non-footwear products.
+
+- Footwear Size
+
+```text
+df['Footwear_Size'] = np.where(
+    df['Category'] == 'Footwear',
+    df['Size'],
+    'Not Applicable'
+)
+```
+
+- Clothing Size
+
+```text
+df['Clothing_Size'] = np.where(
+    df['Category'] != 'Footwear',
+    df['Size'],
+    'Not Applicable'
+)
+```
+
+This allows category-specific analysis in downstream SQL and Power BI analysis.
+
+### 6. Column Organization
+
+The newly created size columns were positioned next to the original Size column to improve dataset readability.
+
+```text
+Clothing_Size = np.where(
+    df['Category'] != 'Footwear',
+    df['Size'],
+    'Not Applicable'
+)
+
+Footwear_Size = np.where(
+    df['Category'] == 'Footwear',
+    df['Size'],
+    'Not Applicable'
+)
+
+size_loc = df.columns.get_loc('Size')
+
+df.insert(
+    size_loc + 1,
+    'Clothing_Size',
+    Clothing_Size
+)
+
+df.insert(
+    size_loc + 2,
+    'Footwear_Size',
+    Footwear_Size
+)
+```
+
+
+
+
+### Objective
+
+The objective of the Python cleaning stage is to ensure that the raw dataset is:
+
+- Clean
+- Consistent
+- Reliable
+- Properly structured
+- Ready for SQL analysis
+- Ready for Power BI visualization
+
+The cleaned dataset serves as the foundation for the subsequent SQL analytics and Power BI dashboard stages of the project.
 
 ---
 
