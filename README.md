@@ -1,6 +1,6 @@
 # Customer Shopping Trend Analysis – India
 
-An end-to-end data analytics project analyzing customer shopping behavior in India using **PostgreSQL, SQL, Power BI, and DAX**.
+An end-to-end data analytics project analyzing customer shopping behavior in India using **Python (numpy & pandas), PostgreSQL, SQL, Power BI, and DAX**.
 
 The project covers data preparation, relational database loading, SQL-based analysis, KPI development, and interactive dashboard creation.
 
@@ -29,13 +29,14 @@ The analysis uses a dataset containing **10,000 transaction records**.
 
 ## Tools & Technologies
 
-| Tool           | Purpose                                          |
-| -------------- | ------------------------------------------------ |
-| **PostgreSQL** | Database creation, data loading and SQL analysis |
-| **SQL**        | Data exploration and business analysis           |
-| **Power BI**   | Interactive dashboard and visualization          |
-| **DAX**        | KPI and calculated measure development           |
-| **Git/GitHub** | Version control and project documentation        |
+| Tool           | Purpose                                                                  |      
+| -------------- | ------------------------------------------------------------------------ |
+| **Python**     | Data cleaning, null value handling, feature engineering, data validation |
+| **PostgreSQL** | Database creation, data loading and SQL analysis                         |
+| **SQL**        | Data exploration and business analysis                                   |
+| **Power BI**   | Interactive dashboard and visualization                                  |
+| **DAX**        | KPI and calculated measure development                                   |
+| **Git/GitHub** | Version control and project documentation                                |
 
 ---
 
@@ -48,6 +49,8 @@ customer-shopping-trend-india/
 │
 ├── data/
 │   └── README.md
+│
+├──
 │
 ├── sql/
 │   ├── 01_create_table.sql
