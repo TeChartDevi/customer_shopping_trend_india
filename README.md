@@ -45,7 +45,6 @@ The analysis uses a dataset containing **10,000 transaction records**.
 customer-shopping-trend-india/
 │
 ├── README.md
-├── .gitignore
 │
 ├── data/
 │   └── README.md
