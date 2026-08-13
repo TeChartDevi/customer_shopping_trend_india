@@ -1,8 +1,8 @@
 # Customer Shopping Trend Analysis – India
 
-An end-to-end data analytics project analyzing customer shopping behavior in India using **Python (numpy & pandas), PostgreSQL, SQL, Power BI, and DAX**.
+An end-to-end data analytics project analyzing customer shopping behavior in India using **Python, PostgreSQL, SQL, Power BI, and DAX**.
 
-The project covers data preparation, relational database loading, SQL-based analysis, KPI development, and interactive dashboard creation.
+The project covers the complete analytics workflow, from raw data cleaning and feature engineering to SQL-based business analysis, KPI development, and interactive Power BI dashboard creation.
 
 ---
 
@@ -11,7 +11,7 @@ The project covers data preparation, relational database loading, SQL-based anal
 The objective of this project is to analyze customer shopping behavior and identify patterns across:
 
 * Revenue and sales performance
-* Product categories
+* Product categories and brands
 * Customer purchasing behavior
 * Online vs. offline shopping
 * Customer demographics
@@ -23,7 +23,7 @@ The objective of this project is to analyze customer shopping behavior and ident
 * Subscription status
 * Monthly revenue trends
 
-The analysis uses a dataset containing **10,000 transaction records**.
+The analysis is based on **10,000 transaction records**.
 
 ---
 
@@ -32,14 +32,47 @@ The analysis uses a dataset containing **10,000 transaction records**.
 | Tool           | Purpose                                                                  |      
 | -------------- | ------------------------------------------------------------------------ |
 | **Python**     | Data cleaning, null value handling, feature engineering, data validation |
+| **Pandas**     | Data manipulation and preprocessing                                      |
+| **NumPy**      | Conditional transformations and feature creation                         |
 | **PostgreSQL** | Database creation, data loading and SQL analysis                         |
 | **SQL**        | Data exploration and business analysis                                   |
 | **Power BI**   | Interactive dashboard and visualization                                  |
-| **DAX**        | KPI and calculated measure development                                   |
+| **DAX**        | KPI and calculated measure development and                                    |
 | **Git/GitHub** | Version control and project documentation                                |
 
 ---
 
+## Project Workflow
+
+```
+Raw Dataset
+     │
+     ▼
+Python
+Data Cleaning & Feature Engineering
+     │
+     ▼
+Clean Dataset
+     │
+     ├───────────────┐
+     ▼               ▼
+PostgreSQL        Power BI
+     │               │
+     ▼               ▼
+SQL Analysis      Data Model
+     │               │
+     │               ▼
+     │             DAX
+     │               │
+     └───────┬───────┘
+             ▼
+      Validation & Analysis
+             │
+             ▼
+      Business Insights
+```
+
+---
 ## Repository Structure
 
 ```text
@@ -50,21 +83,47 @@ customer-shopping-trend-india/
 ├── data/
 │   └── README.md
 │
-├──
+├── clean_data/
+│   └── clean_customer_shopping_behavior_india.csv
+│
+├── python_cleaning/
+│   ├── data_cleaning.ipynb
+│   └── README.md
 │
 ├── sql/
-│   ├── 01_create_table.sql
+│   │
+│   ├── 01 create_table.sql
+│   │   └── Script.sql
+│   │
 │   ├── 02_import_data.sql
+│   │   └── import_data.sql
+│   │
 │   └── 03_analysis_queries.sql
+│       ├── Customer_Analysis.sql
+│       ├── Customer_Satisfaction.sql
+│       ├── Delivery_&_Shipping_Analysis.sql
+│       ├── Discount_Analysis.sql
+│       ├── Geographic_Analysis.sql
+│       ├── Online_vs_Offline_Analysis.sql
+│       ├── Overview.sql
+│       ├── Payment_Analysis.sql
+│       ├── Product_Analysis.sql
+│       ├── Returns_analysis.sql
+│       ├── Revenue_&_Sales_Analysis.sql
+│       └── Time-Series_Analysis.sql
 │
 ├── powerbi/
-│   └── DAX_Measures.md
+│   ├── customer_shopping_trend_india.pbix
+│   ├── DAX_Measures.md
+│   └── README.md
 │
 ├── docs/
 │   └── data_dictionary.md
 │
 └── screenshots/
-    └── README.md
+    ├── dashboard_overview.png
+    ├── sales_analysis.png
+    └── customer_analysis.png
 ```
 
 ---
@@ -100,181 +159,75 @@ The dataset contains customer shopping transactions with information covering:
 
 ---
 
-# Data Workflow
+1. Data Cleaning – Python
 
-The project follows this workflow:
+Python was used as the first stage of the data pipeline to inspect, clean and prepare the raw dataset.
 
-```text
-Raw Dataset
-     │
-     ▼
-Data Cleaning (Python, Numpy, Pandas)
-     │
-     ├── Imported libraries & loaded the file
-     ├── Data Inspection
-     ├── Null Value Check & Handling
-     ├── Feature Engineering
-     ├── Clean Dataset Export
-     └── Conclusion
-     │
-     ▼
-PostgreSQL
-     │
-     ├── Table Creation
-     ├── Data Import
-     └── SQL Analysis
-     │
-     ▼
-Power BI
-     │
-     ├── Data Model
-     ├── DAX Measures
-     └── Dashboard
-     │
-     ▼
-Business Insights
-```
-
----
-
-# Data Cleaning Steps
-
-### 1. Data Loading
-
-The raw customer shopping dataset was loaded into a Pandas DataFrame for inspection and cleaning.
+The main libraries used were:
 
 ```text
 import pandas as pd
 import numpy as np
-
-df= pd.read_csv("../raw_data/customer_shopping_behavior.csv")
 ```
 
-### 2. Initial Data Inspection
+---
 
-The dataset was inspected to understand its structure, data types, missing values, and duplicates
+# Data Cleaning Activities
 
-```text
-df.head()
-df.info()
-df.shape
-df.describe()
-```
-
-### 3. Missing Value Analysis
-
-Missing values were identified across the dataset.
-
-```text
-df.isnull().sum().sort_values(ascending=False)
-```
-
-Specific columns were also investigated to understand relationships between missing values.
-
-```text
-df[
-    df[['Festival/Sale', 'Online Store']]
-    .isnull()
-    .any(axis=1)
-][['Festival/Sale', 'Online Store']]
-```
-
-This helped determine whether missing values represented actual missing information or valid business cases.
-
-### 4. Conditional Missing Value Handling
-
-Missing values were handled based on business logic rather than blindly replacing all null values.
-
-- Online Store
-
-For offline purchases where the online store was missing:
-
-```text
-df.loc[
-    (df['Online/Offline'] == 'Offline') &
-    (df['Online Store'].isna()),
-    'Online Store'
-] = 'In-Store Purchase'
-```
-
-This distinguishes an actual offline purchase from an unknown online store.
-
-- Delivery Speed
-
-For records with zero delivery time and missing delivery speed:
-
-```text
-df.loc[
-    (df['Delivery Time (Days)'] == 0) &
-    (df['Delivery Speed'].isna()),
-    'Delivery Speed'
-] = 'N/A (Offline)'
-```
-
-This reflects the assumption that a zero-day delivery time represents an offline purchase where delivery speed is not applicable.
-
-### 5. Category-Specific Size Columns
-
-The original Size column contains size information for different product categories.
-
-To make the data easier to analyze, separate columns were created for footwear and non-footwear products.
-
-- Footwear Size
-
-```text
-df['Footwear_Size'] = np.where(
-    df['Category'] == 'Footwear',
-    df['Size'],
-    'Not Applicable'
-)
-```
-
-- Clothing Size
-
-```text
-df['Clothing_Size'] = np.where(
-    df['Category'] != 'Footwear',
-    df['Size'],
-    'Not Applicable'
-)
-```
-
-This allows category-specific analysis in downstream SQL and Power BI analysis.
-
-### 6. Column Organization
-
-The newly created size columns were positioned next to the original Size column to improve dataset readability.
-
-```text
-Clothing_Size = np.where(
-    df['Category'] != 'Footwear',
-    df['Size'],
-    'Not Applicable'
-)
-
-Footwear_Size = np.where(
-    df['Category'] == 'Footwear',
-    df['Size'],
-    'Not Applicable'
-)
-
-size_loc = df.columns.get_loc('Size')
-
-df.insert(
-    size_loc + 1,
-    'Clothing_Size',
-    Clothing_Size
-)
-
-df.insert(
-    size_loc + 2,
-    'Footwear_Size',
-    Footwear_Size
-)
-```
+The following steps were performed:
 
 
+## Data Inspection
 
+- Inspected dataset structure using .info()
+- Reviewed statistical information using .describe()
+- Checked dataset dimensions
+- Reviewed sample records
+- Checked duplicate records
+
+## Missing Value Handling
+
+Missing values were identified and handled using business logic.
+
+Columns requiring treatment included:
+
+-- `Festival/Sale`
+-- `Online Store`
+-- `Delivery Speed`
+-- `Size`
+
+For example, offline transactions with a missing online store were classified as:
+`In-Store Purchase`
+
+Similarly, records with zero delivery time and missing delivery speed were classified as:
+`N/A (Offline)`
+
+## Data Type Correction
+
+`Purchase Date` was converted from an object/string field to a proper datetime datatype.
+
+## Column Renaming
+
+The `Location` column was renamed to:
+
+`Cities`
+
+## Feature Engineering
+
+Several business-relevant columns were created:
+
+- `Region`
+- `Clothing_Size`
+- `Footwear_Size`
+- `Year`
+- `Month`
+- `Day`
+- `Weekday`
+- `Age Group`
+
+The detailed Python cleaning process is documented in:
+
+`python_cleaning/README.md`
 
 ### Objective
 
@@ -291,35 +244,36 @@ The cleaned dataset serves as the foundation for the subsequent SQL analytics an
 
 ---
 
-# PostgreSQL
+2. PostgreSQL & SQL Analysis
 
-The cleaned dataset was loaded into PostgreSQL using a client-side `\copy` command.
+The cleaned dataset was loaded into PostgreSQL for structured analysis.
 
 The final table is:
 
-```text
-public.cust_shop_trend_ind
-```
+`cust_shop_trend_ind`
 
-The SQL scripts are organized as follows:
+## SQL Scripts
 
-### `01_create_table.sql`
+`01_create_table.sql`
 
 Creates the PostgreSQL table.
 
-### `02_import_data.sql`
+`02_import_data.sql`
 
-Imports the cleaned CSV file using PostgreSQL's `\copy` command.
+Imports the cleaned CSV using PostgreSQL's \copy command.
 
-### `03_analysis_queries.sql`
+`03_all_analysis_queries.sql`
 
-Contains SQL queries used to answer business questions and validate Power BI calculations.
+Contains SQL queries used to answer business questions and calculate analytical metrics.
 
----
+The detailed SQL documentation is available in:
 
-# Revenue Definition
+`sql/README.md`
 
-Revenue was calculated at the transaction level using:
+
+## Revenue Definition
+
+Revenue was calculated consistently across SQL and Power BI using:
 
 ```text
 Revenue =
@@ -328,27 +282,101 @@ Revenue =
 + Shipping Charge
 ```
 
-The same logic was implemented in both PostgreSQL and Power BI to ensure that the dashboard calculations could be validated against SQL results.
+SQL implementation:
+
+```sql
+SUM(
+    (purchase_amount * quantity)
+    * (1 - discount / 100.0)
+    + shipping_charge
+)
+```
+This calculation is performed at the **transaction level before aggregation** so that the discount is correctly applied to each transaction.
 
 ---
 
-# Power BI
 
-Power BI was used to create an interactive dashboard covering the major business KPIs and trends.
+3. Power BI Dashboard
 
-Key measures include:
+Power BI was used to transform the cleaned dataset and analytical results into an interactive business dashboard.
 
-* Total Revenue
-* Total Orders
-* Total Customers
-* Average Order Value
-* Average Orders per Customer
-* Returned Orders
-* Return Rate
-* Previous Month Revenue
-* Month-over-Month Revenue Growth
+The dashboard contains KPIs covering:
 
-The DAX measures are documented in:
+### Sales Performance
+- Total Revenue
+- Total Orders
+- Average Order Value
+- Revenue by Category
+- Monthly Revenue
+- MoM Revenue Growth
+
+### Customer Analysis
+- Total Customers
+- Average Orders per Customer
+- Age Group
+- Purchase Frequency
+- Subscription Status
+
+### Operations
+- Delivery Speed
+- Delivery Time
+- Return Rate
+- Returned Orders
+- Online vs. Offline Shopping
+
+### Customer Experience
+- Review Ratings
+- Payment Methods
+- Return Behavior
+- Discount Analysis
+
+## DAX & Time Intelligence
+
+DAX measures were created for the major KPIs.
+
+Examples include:
+
+```text
+AOV =
+DIVIDE(
+    [Revenue],
+    [Total Orders]
+)
+```
+
+```text
+Return Rate =
+DIVIDE(
+    [Returned Orders],
+    [Total Orders]
+) * 100
+```
+
+Previous month revenue was calculated using a separate Calendar table:
+
+```text
+Previous Month Revenue =
+CALCULATE(
+    [Revenue],
+    DATEADD(
+        Calender[Date],
+        -1,
+        MONTH
+    )
+)
+```
+
+Month-over-month revenue growth:
+
+```text
+MoM Growth % =
+DIVIDE(
+    [Revenue] - [Previous Month Revenue],
+    [Previous Month Revenue]
+) * 100
+```
+
+Detailed DAX measures are documented in:
 
 ```text
 powerbi/DAX_Measures.md
@@ -356,9 +384,31 @@ powerbi/DAX_Measures.md
 
 ---
 
-# Key Validated Results
+4. SQL → Power BI Validation
 
-The following results were validated between PostgreSQL and Power BI.
+PostgreSQL and Power BI were used together to validate the analytical results.
+
+The same business logic was implemented in both systems.
+
+For example, SQL calculates revenue using:
+
+```sql
+SUM(
+    (purchase_amount * quantity)
+    * (1 - discount / 100.0)
+    + shipping_charge
+)
+```
+
+Power BI calculates the same logic using SUMX().
+
+Selected SQL GROUP BY results were compared with Power BI visual-level results to ensure that the dashboard calculations were consistent with the SQL analysis.
+
+This validation helps reduce calculation discrepancies between the database analysis and dashboard.
+
+---
+
+# Key Analysis Results
 
 ## Revenue by Category
 
@@ -369,7 +419,11 @@ The following results were validated between PostgreSQL and Power BI.
 | Accessories |      ₹3,137,271.75 |
 | **Total**   | **₹22,519,600.68** |
 
-Clothing generated the highest revenue among the three categories, followed by Footwear and Accessories.
+### Insight
+
+**Clothing** generated the highest revenue, followed by **Footwear** and **Accessories**.
+
+Clothing contributed approximately **44.32%** of total revenue.
 
 ---
 
@@ -382,101 +436,9 @@ Clothing generated the highest revenue among the three categories, followed by F
 | N/A (Offline)  |        2,249 |             364 |      16.18% |
 | Same Day       |          558 |              90 |      16.13% |
 
-Standard delivery has the highest observed return rate at **19.78%**, while Same Day delivery has the lowest at **16.13%** among the listed delivery categories.
+Standard delivery recorded the highest observed return rate at **19.78%**, while Same Day delivery has the lowest at **16.13%** among the listed delivery categories.
 
----
-
-# Dashboard
-
-The Power BI dashboard is designed to provide an overview of:
-
-### Sales Performance
-
-* Total Revenue
-* Total Orders
-* Average Order Value
-* Revenue by Category
-* Revenue trends over time
-
-### Customer Analysis
-
-* Unique Customers
-* Average Orders per Customer
-* Customer demographics
-* Purchase frequency
-* Subscription status
-
-### Operational Analysis
-
-* Return Rate
-* Returned Orders
-* Return Rate by Delivery Speed
-* Delivery performance
-* Online vs. Offline performance
-
-### Customer Experience
-
-* Review ratings
-* Payment methods
-* Return behavior
-* Delivery speed
-
----
-
-# SQL → Power BI Validation
-
-A key objective of this project was ensuring that Power BI calculations were consistent with PostgreSQL.
-
-For example, the SQL revenue calculation:
-
-```sql
-SUM(
-    (purchase_amount * quantity)
-    * (1 - discount / 100.0)
-    + shipping_charge
-)
-```
-
-was reproduced in Power BI using `SUMX()`.
-
-This is important because the revenue calculation needs to happen **at the transaction level before the values are aggregated**.
-
-The project also uses SQL `GROUP BY` results to validate Power BI visual-level results.
-
----
-
-# Filter Context in Power BI
-
-The project distinguishes between:
-
-### Context-aware measures
-
-Measures such as:
-
-```DAX
-Revenue =
-SUMX(...)
-```
-
-respond to filters and slicers in Power BI.
-
-For example, placing `Category` on a chart causes the Revenue measure to calculate revenue separately for each category.
-
-### Overall measures
-
-`ALL()` is only used when an overall dataset benchmark is required.
-
-For example:
-
-```DAX
-Overall Revenue =
-CALCULATE(
-    [Revenue],
-    ALL(clean_cust_shopping_behavior_india)
-)
-```
-
-Using `ALL()` in a normal category-level measure would remove the category filter and cause every category to display the same total.
+These results indicate an **association** between delivery speed and return rate in this dataset, but they do not establish causation.
 
 ---
 
@@ -499,82 +461,131 @@ The project addresses questions such as:
 
 ---
 
-# How to Reproduce the Project
+# Dashboard Preview
 
-## 1. Prepare the data
+## Overview
 
-Clean the source dataset and ensure the column names and data types are compatible with PostgreSQL.
+## Sales Analysis
 
-## 2. Create the PostgreSQL table
-
-Run:
-
-```text
-sql/01_create_table.sql
-```
-
-## 3. Import the CSV
-
-Update the file path in:
-
-```text
-sql/02_import_data.sql
-```
-
-Then execute it from `psql`.
-
-## 4. Run the SQL analysis
-
-Use:
-
-```text
-sql/03_analysis_queries.sql
-```
-
-to reproduce the main analysis.
-
-## 5. Open Power BI
-
-Load the cleaned dataset and create the required data model.
-
-## 6. Add DAX measures
-
-Use the measures documented in:
-
-```text
-powerbi/DAX_Measures.md
-```
-
-## 7. Validate
-
-Compare Power BI results against the corresponding SQL queries before finalizing dashboard visuals.
+## Customer & Operations Analysis
 
 ---
 
 # Key Learnings
 
-This project provided practical experience with:
+This project provided practical experience with the complete analytics workflow:
 
-* SQL data analysis
-* PostgreSQL table creation
-* CSV data ingestion
-* Data type troubleshooting
-* `GROUP BY` analysis
-* Conditional aggregation
-* Revenue calculations
-* Power BI data modeling
-* DAX measures
-* `SUMX`
-* `CALCULATE`
-* `DISTINCTCOUNT`
-* `DIVIDE`
-* `DATEADD`
-* Filter context
-* `ALL()`
-* SQL-to-Power BI validation
-* Dashboard development
+# Python
+- Data inspection
+- Missing value analysis
+- Conditional data cleaning
+- Datatype conversion
+- Feature engineering
+- Data validation
 
-A particularly important DAX concept learned during the project was understanding how **filter context affects visual-level calculations**.
+# PostgreSQL & SQL
+- Table creation
+- CSV data loading
+- Aggregations
+- GROUP BY
+- Conditional aggregation
+- CTEs
+- Window functions
+- Ranking
+- Time-based analysis
+- Business KPI calculations
+
+# Power BI & DAX
+- Data modeling
+- Calendar tables
+- Measures
+- Filter context
+- SUMX()
+- CALCULATE()
+- DIVIDE()
+- DISTINCTCOUNT()
+- DATEADD()
+- Previous-period analysis
+- MoM growth
+- Interactive dashboard design
+
+---
+
+# How to Reproduce the Project
+
+## Step 1 — Clean the Dataset
+
+Run the Python notebook:
+
+`python_cleaning/data_cleaning.ipynb`
+
+This produces the cleaned dataset in:
+
+`clean_data/`
+
+## Step 2 — Create the PostgreSQL Table
+
+Run the Scipt in:
+
+`01 Table Creation`
+
+## Step 3 — Import the Data
+
+Run the Scipt in:
+
+`02 Importing Data`
+
+using PostgreSQL/psql.
+
+## Step 4 — Run SQL Analysis
+
+Execute queries in:
+
+`All Analysis Queries`
+
+## Step 5 — Open the Power BI Dashboard
+
+Open:
+
+`powerbi/customer_shopping_trend_india.pbix`
+
+## Step 6 — Review DAX Measures
+
+Refer to:
+
+`powerbi/DAX_Measures.md`
+
+---
+
+
+## 7. Validate
+
+Compare Power BI results against the corresponding SQL queries before finalizing dashboard visuals.
+
+
+---
+
+# Conclusion
+
+This project demonstrates an end-to-end approach to data analytics, starting with raw customer transaction data and progressing through:
+
+```text
+Data Cleaning
+      ↓
+Feature Engineering
+      ↓
+PostgreSQL
+      ↓
+SQL Analysis
+      ↓
+DAX & Power BI
+      ↓
+Dashboard
+      ↓
+Business Insights
+```
+
+The project combines technical data preparation with business-focused analysis to understand sales performance, customer behavior, delivery operations, and return patterns.
 
 ---
 
