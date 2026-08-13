@@ -21,7 +21,7 @@ The dashboard includes the following key measures:
 The DAX measures are documented in:
 
 ```text
-powerbi/DAX_Measure.md
+powerbi/DAX_measures.md
 ```
 
 ---
