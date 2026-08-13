@@ -37,7 +37,7 @@ The analysis is based on **10,000 transaction records**.
 | **PostgreSQL** | Database creation, data loading and SQL analysis                         |
 | **SQL**        | Data exploration and business analysis                                   |
 | **Power BI**   | Interactive dashboard and visualization                                  |
-| **DAX**        | KPI and calculated measure development and                                    |
+| **DAX**        | KPI and calculated measure development and                               |
 | **Git/GitHub** | Version control and project documentation                                |
 
 ---
