@@ -1,7 +1,7 @@
 ------------- Discount Analysis ------------- 
 
 -- Data Preview
-select * from cust_shop_trend_ind limit 50;
+select * from cust_shop_trend_ind limit 50; 
 
 -- Which discount ranges generate the most revenue?
 select

@@ -1,3 +1,4 @@
+-- Table Creation
 
 DROP TABLE IF EXISTS cust_shop_trend_ind CASCADE;
 
