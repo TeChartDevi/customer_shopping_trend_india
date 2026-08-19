@@ -155,11 +155,11 @@ import numpy as np
 
 ---
 
-# Data Cleaning Activities
+## Data Cleaning Activities
 
 The following steps were performed:
 
-## Data Inspection
+### Data Inspection
 
 - Inspected dataset structure using .info()
 - Reviewed statistical information using .describe()
@@ -167,7 +167,7 @@ The following steps were performed:
 - Reviewed sample records
 - Checked duplicate records
 
-## Missing Value Handling
+### Missing Value Handling
 
 Missing values were identified and handled using business logic.
 
@@ -184,17 +184,17 @@ For example, offline transactions with a missing online store were classified as
 Similarly, records with zero delivery time and missing delivery speed were classified as:
 `N/A (Offline)`
 
-## Data Type Correction
+### Data Type Correction
 
 `Purchase Date` was converted from an object/string field to a proper datetime datatype.
 
-## Column Renaming
+### Column Renaming
 
 The `Location` column was renamed to:
 
 `Cities`
 
-## Feature Engineering
+### Feature Engineering
 
 Several business-relevant columns were created:
 
@@ -234,7 +234,7 @@ The final table is:
 
 `cust_shop_trend_ind`
 
-## SQL Scripts
+### SQL Scripts
 
 `01_create_table.sql`
 
@@ -253,7 +253,7 @@ The detailed SQL documentation is available in:
 `sql/README.md`
 
 
-## Revenue Definition
+### Revenue Definition
 
 Revenue was calculated consistently across SQL and Power BI using:
 
