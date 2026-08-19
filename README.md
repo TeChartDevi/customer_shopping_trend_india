@@ -172,10 +172,10 @@ The following steps were performed:
 Missing values were identified and handled using business logic.
 
 Columns requiring treatment included:
--- `Festival/Sale`
--- `Online Store`
--- `Delivery Speed`
--- `Size`
+- `Festival/Sale`
+- `Online Store`
+- `Delivery Speed`
+- `Size`
 
 For example, offline transactions with a missing online store were classified as:
 `In-Store Purchase`
