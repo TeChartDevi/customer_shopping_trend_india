@@ -134,10 +134,10 @@ The Calendar table contains a continuous date range and is related to the Purcha
 
 This enables time-intelligence calculations such as:
 
-- Previous Month Revenue
-- MoM Revenue Growth
-- Monthly Revenue Trends
-- Year-over-Year comparisons
+* Previous Month Revenue
+* MoM Revenue Growth
+* Monthly Revenue Trends
+* Year-over-Year comparisons
 
 ---
 
@@ -214,15 +214,15 @@ The dashboard provides interactive filtering through slicers and visual-level fi
 
 Users can explore the data by dimensions such as:
 
-- Year
-- Month
-- Region
-- Category
-- Online/Offline
-- Payment Method
-- Delivery Speed
-- Subscription Status
-- Age Group
+* Year
+* Month
+* Region
+* Category
+* Online/Offline
+* Payment Method
+* Delivery Speed
+* Subscription Status
+* Age Group
 
 The dashboard allows users to move from high-level KPIs into more detailed sales, customer, product, delivery, and return analysis.
 
@@ -231,7 +231,10 @@ The dashboard allows users to move from high-level KPIs into more detailed sales
 # Dashboard Preview
 
 ## Overview
+![Overview](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Overview.png)
 
 ## Sales Analysis
+![Sales Analysis](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Sales%20Analysis.png)
 
-## Customer & Operation Analysis
+## Customer & Operations Analysis
+![Customer & Operations Analysis](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Customer%20%26%20Operations%20Analysis.png)
