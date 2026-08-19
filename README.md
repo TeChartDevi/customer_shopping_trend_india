@@ -285,9 +285,6 @@ The report is organized into three analytical pages:
 ### 1. Overview
 Provides a high-level view of overall business performance through key sales, customer, and operational KPIs.
 
-Dashboard Preview:
-![Overview](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Overview.png)
-
 ### 2. Sales Analysis
 Focuses on revenue performance, orders, product categories, regions, sales channels, discounts, and monthly revenue trends.
 
