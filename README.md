@@ -44,33 +44,9 @@ The analysis is based on **10,000 transaction records**.
 
 ## Project Workflow
 
-```
-Raw Dataset
-     │
-     ▼
-Python
-Data Cleaning & Feature Engineering
-     │
-     ▼
-Clean Dataset
-     │
-     ├───────────────┐
-     ▼               ▼
-PostgreSQL        Power BI
-     │               │
-     ▼               ▼
-SQL Analysis      Data Model
-     │               │
-     │               ▼
-     │             DAX
-     │               │
-     └───────┬───────┘
-             ▼
-      Validation & Analysis
-             │
-             ▼
-      Business Insights
-```
+
+![Project Workflow](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Data%20Flow%20(Customer%20Shopping%20Trend%20India).drawio.png)
+
 
 ---
 ## Repository Structure
@@ -80,8 +56,8 @@ customer-shopping-trend-india/
 │
 ├── README.md
 │
-├── data/
-│   └── README.md
+├── raw_data/
+│   └── customer_shopping_behavior_india.csv
 │
 ├── clean_data/
 │   └── clean_customer_shopping_behavior_india.csv
@@ -116,6 +92,13 @@ customer-shopping-trend-india/
 │   ├── customer_shopping_trend_india.pbix
 │   ├── DAX_Measures.md
 │   └── README.md
+│
+├── Images/
+│   ├── Customer & Operations Analysis.png
+│   ├── Data Flow (Customer Shopping Trend India).drawio
+│   ├── Data Flow (Customer Shopping Trend India).drawio.png
+│   ├── Overview.png
+│   └── Sales Analysis.png
 │
 ├── docs/
 │   └── data_dictionary.md
@@ -464,10 +447,13 @@ The project addresses questions such as:
 # Dashboard Preview
 
 ## Overview
+![Overview](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Overview.png)
 
 ## Sales Analysis
+![Sales Analysis](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Sales%20Analysis.png)
 
 ## Customer & Operations Analysis
+![Customer & Operations Analysis](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Customer%20%26%20Operations%20Analysis.png)
 
 ---
 
