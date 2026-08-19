@@ -142,7 +142,7 @@ The dataset contains customer shopping transactions with information covering:
 
 ---
 
-1. Data Cleaning – Python
+# 1. Data Cleaning – Python
 
 Python was used as the first stage of the data pipeline to inspect, clean and prepare the raw dataset.
 
@@ -158,7 +158,6 @@ import numpy as np
 # Data Cleaning Activities
 
 The following steps were performed:
-
 
 ## Data Inspection
 
@@ -210,7 +209,7 @@ Several business-relevant columns were created:
 
 The detailed Python cleaning process is documented in:
 
-`python_cleaning/README.md`
+`python/README.md`
 
 ### Objective
 
@@ -227,7 +226,7 @@ The cleaned dataset serves as the foundation for the subsequent SQL analytics an
 
 ---
 
-2. PostgreSQL & SQL Analysis
+# 2. PostgreSQL & SQL Analysis
 
 The cleaned dataset was loaded into PostgreSQL for structured analysis.
 
@@ -279,7 +278,7 @@ This calculation is performed at the **transaction level before aggregation** so
 ---
 
 
-3. Power BI Dashboard
+# 3. Power BI Dashboard
 
 Power BI was used to transform the cleaned dataset and analytical results into an interactive business dashboard.
 
