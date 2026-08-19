@@ -161,21 +161,21 @@ The following steps were performed:
 
 ### Data Inspection
 
-- Inspected dataset structure using .info()
-- Reviewed statistical information using .describe()
-- Checked dataset dimensions
-- Reviewed sample records
-- Checked duplicate records
+* Inspected dataset structure using .info()
+* Reviewed statistical information using .describe()
+* Checked dataset dimensions
+* Reviewed sample records
+* Checked duplicate records
 
 ### Missing Value Handling
 
 Missing values were identified and handled using business logic.
 
 Columns requiring treatment included:
-- `Festival/Sale`
-- `Online Store`
-- `Delivery Speed`
-- `Size`
+* `Festival/Sale`
+* `Online Store`
+* `Delivery Speed`
+* `Size`
 
 For example, offline transactions with a missing online store were classified as:
 `In-Store Purchase`
@@ -197,14 +197,14 @@ The `Location` column was renamed to:
 
 Several business-relevant columns were created:
 
-- `Region`
-- `Clothing_Size`
-- `Footwear_Size`
-- `Year`
-- `Month`
-- `Day`
-- `Weekday`
-- `Age Group`
+* `Region`
+* `Clothing_Size`
+* `Footwear_Size`
+* `Year`
+* `Month`
+* `Day`
+* `Weekday`
+* `Age Group`
 
 The detailed Python cleaning process is documented in:
 
@@ -214,12 +214,12 @@ The detailed Python cleaning process is documented in:
 
 The objective of the Python cleaning stage is to ensure that the raw dataset is:
 
-- Clean
-- Consistent
-- Reliable
-- Properly structured
-- Ready for SQL analysis
-- Ready for Power BI visualization
+* Clean
+* Consistent
+* Reliable
+* Properly structured
+* Ready for SQL analysis
+* Ready for Power BI visualization
 
 The cleaned dataset serves as the foundation for the subsequent SQL analytics and Power BI dashboard stages of the project.
 
@@ -276,40 +276,79 @@ This calculation is performed at the **transaction level before aggregation** so
 
 ---
 
+# 3. Power BI Dashboard
+
+Power BI was used to transform the cleaned dataset and SQL analysis results into an interactive business intelligence dashboard.
+
+The report is organized into three analytical pages:
+
+### 1. Overview
+Provides a high-level view of overall business performance through key sales, customer, and operational KPIs.
+
+Dashboard Preview:
+![Overview](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Overview.png)
+
+### 2. Sales Analysis
+Focuses on revenue performance, orders, product categories, regions, sales channels, discounts, and monthly revenue trends.
+
+### 3. Customer & Operations
+Analyzes customer behavior, purchasing patterns, reviews, delivery performance, and return behavior.
+
+### Key KPIs
+
+The dashboard includes the following KPIs across the three pages:
+
+* Total Revenue
+* Total Customers
+* Total Orders
+* Average Order Value (AOV)
+* Return Rate %
+* Month-over-Month (MoM) Revenue Growth %
+* Quantity Sold
+* Average Orders per Customer
+* Returned Orders
+* Average Delivery Time
+
+### Interactive Filters
+
+The dashboard provides interactive slicers for:
+
+* Year
+* Month
+* Region
+* Category
+* Payment Method
+* Online/Offline
+* Subscription Status
+
+These filters allow users to analyze business performance across different time periods, customer segments, product categories, regions, sales channels, and subscription groups.
 
 # 3. Power BI Dashboard
 
 Power BI was used to transform the cleaned dataset and analytical results into an interactive business dashboard.
 
-The dashboard contains KPIs covering:
+The dashboard contains KPIs covering in all 3 pages:
 
-### Sales Performance
-- Total Revenue
-- Total Orders
-- Average Order Value
-- Revenue by Category
-- Monthly Revenue
-- MoM Revenue Growth
+* Total Revenue
+* Total Customers
+* Total Orders
+* Average Order Value
+* Return Rate %
+* MoM Growth %
+* Quantity Sold
+* Average Order Per Customer
+* Returned Orders
+* Average Delivery Time
 
-### Customer Analysis
-- Total Customers
-- Average Orders per Customer
-- Age Group
-- Purchase Frequency
-- Subscription Status
+Filters:
 
-### Operations
-- Delivery Speed
-- Delivery Time
-- Return Rate
-- Returned Orders
-- Online vs. Offline Shopping
-
-### Customer Experience
-- Review Ratings
-- Payment Methods
-- Return Behavior
-- Discount Analysis
+* Year
+* Month
+* Region
+* Category
+* Payment Method
+* Online/Offline
+* Subscription Status
 
 ## DAX & Time Intelligence
 
@@ -363,9 +402,21 @@ Detailed DAX measures are documented in:
 powerbi/DAX_Measures.md
 ```
 
+
+## Dashboard Preview
+
+### Overview
+![Overview](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Overview.png)
+
+### Sales Analysis
+![Sales Analysis](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Sales%20Analysis.png)
+
+### Customer & Operations Analysis
+![Customer & Operations Analysis](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Customer%20%26%20Operations%20Analysis.png)
+
 ---
 
-4. SQL → Power BI Validation
+# 4. SQL → Power BI Validation
 
 PostgreSQL and Power BI were used together to validate the analytical results.
 
@@ -439,19 +490,6 @@ The project addresses questions such as:
 10. What payment methods are most commonly used?
 11. How does subscription status relate to purchasing behavior?
 12. How does delivery performance relate to returns?
-
----
-
-# Dashboard Preview
-
-## Overview
-![Overview](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Overview.png)
-
-## Sales Analysis
-![Sales Analysis](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Sales%20Analysis.png)
-
-## Customer & Operations Analysis
-![Customer & Operations Analysis](https://github.com/TeChartDevi/customer_shopping_trend_india/blob/main/Images/Customer%20%26%20Operations%20Analysis.png)
 
 ---
 
@@ -541,11 +579,9 @@ Refer to:
 
 ---
 
-
 ## 7. Validate
 
 Compare Power BI results against the corresponding SQL queries before finalizing dashboard visuals.
-
 
 ---
 
