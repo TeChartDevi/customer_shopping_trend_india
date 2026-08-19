@@ -172,7 +172,6 @@ The following steps were performed:
 Missing values were identified and handled using business logic.
 
 Columns requiring treatment included:
-
 -- `Festival/Sale`
 -- `Online Store`
 -- `Delivery Speed`
