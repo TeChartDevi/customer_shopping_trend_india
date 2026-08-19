@@ -68,13 +68,13 @@ customer-shopping-trend-india/
 │
 ├── sql/
 │   │
-│   ├── 01 create_table.sql
+│   ├── 01 create_table
 │   │   └── Script.sql
 │   │
-│   ├── 02_import_data.sql
+│   ├── 02_import_data
 │   │   └── import_data.sql
 │   │
-│   └── 03_analysis_queries.sql
+│   └── 03_analysis_queries
 │       ├── Customer_Analysis.sql
 │       ├── Customer_Satisfaction.sql
 │       ├── Delivery_&_Shipping_Analysis.sql
